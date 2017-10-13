@@ -8,6 +8,7 @@ package com.bor.javawebexample.db;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import java.io.IOException;
@@ -22,28 +23,28 @@ import java.util.logging.Logger;
  * @author leon
  */
 public class ORMLiteUtils {
-
+///TODO(leon): move to config
     private static String databaseUrl = "jdbc:mysql://localhost:3306/test";
     private static String user = "root";
     private static String password = "1";
+    private static Logger logger = Logger.getLogger(ORMLiteUtils.class.getName());
 
-    private static final String TAG = ORMLiteUtils.class.getName();
 
     public static <T> void createTable(Class<T> type) {
-        try (ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl, user, password)) {
+        try (ConnectionSource connectionSource = new JdbcPooledConnectionSource(databaseUrl, user, password)) {
             TableUtils.createTableIfNotExists(connectionSource, type);
         } catch (SQLException | IOException ex) {
-            Logger.getLogger(TAG).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
         }
     }
 
     public static <T> void create(Class<T> type, T object) {
         Dao<T, String> dao = null;
-        try (ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl, user, password)) {
+        try (ConnectionSource connectionSource = new JdbcPooledConnectionSource(databaseUrl, user, password)) {
             dao = DaoManager.createDao(connectionSource, type);
-            dao.create(object);            
+            dao.create(object);
         } catch (SQLException | IOException ex) {
-            Logger.getLogger(TAG).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
         }
     }
 
@@ -51,11 +52,25 @@ public class ORMLiteUtils {
         List<T> list = new ArrayList<>();
         Dao<T, String> dao = null;
 
-        try (ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl, user, password)) {
+        try (ConnectionSource connectionSource = new JdbcPooledConnectionSource(databaseUrl, user, password)) {
             dao = DaoManager.createDao(connectionSource, type);
-            list = dao.queryForAll();            
+            list = dao.queryForAll();
         } catch (SQLException | IOException ex) {
-            Logger.getLogger(TAG).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
+        }
+
+        return list;
+    }
+
+    public static <T> List<T> find(Class<T> type, T matchObj) {
+        List<T> list = new ArrayList<>();
+        Dao<T, String> dao = null;
+
+        try (ConnectionSource connectionSource = new JdbcPooledConnectionSource(databaseUrl, user, password)) {
+            dao = DaoManager.createDao(connectionSource, type);
+            list = dao.queryForMatchingArgs(matchObj);
+        } catch (SQLException | IOException ex) {
+            logger.log(Level.SEVERE, null, ex);
         }
 
         return list;
