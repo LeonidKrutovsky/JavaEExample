@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 public class JobsServlet extends HttpServlet {
 
     private List<JobRecord> jobList = new ArrayList<>();
+    private List<PhonebookRecord> phonebookList = new ArrayList<>();
     private boolean isCreate = false;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -36,6 +37,8 @@ public class JobsServlet extends HttpServlet {
         }
         response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("jobList", jobList);
+        request.setAttribute("phonebookList", phonebookList);
+        
         request.getRequestDispatcher("/JobsAndPhonebookTables.jsp").forward(request, response);
     }
 
@@ -57,7 +60,7 @@ public class JobsServlet extends HttpServlet {
             ORMLiteUtils.create(JobRecord.class, record);
             jobList.add(record);
         } else if (request.getParameter("search") != null) {
-            if (isEmptyRecord(record)) {
+            if (isEmptySearchPost(record)) {
                 jobList = ORMLiteUtils.getAll(JobRecord.class);
             } else {
                 jobList = ORMLiteUtils.find(JobRecord.class, record);
@@ -93,7 +96,7 @@ public class JobsServlet extends HttpServlet {
         return job;
     }
 
-    private static boolean isEmptyRecord(JobRecord record) {
+    private static boolean isEmptySearchPost(JobRecord record) {
         return record.getLastname() == null
                 && record.getFirstname() == null
                 && record.getJob() == null
