@@ -5,16 +5,25 @@
  */
 package com.bor.javawebexample.db;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 /**
  *
  * @author leon
  */
+@DatabaseTable(tableName = "Jobs")
 public class JobRecord {      
 
+    @DatabaseField(generatedId = true)
     private int id;
+    @DatabaseField
     private String lastname;
+    @DatabaseField
     private String firstname;
+    @DatabaseField
     private String job;
+    @DatabaseField
     private String address;
     
     public JobRecord() {}
