@@ -1,0 +1,14 @@
+*.class
+
+#netbeans specific
+core
+nbproject/*
+!nbproject/project.properties
+!nbproject/project.xml
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+*.log
