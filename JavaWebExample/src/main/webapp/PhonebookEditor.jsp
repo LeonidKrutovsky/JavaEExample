@@ -48,12 +48,15 @@
                     <input id="birthdate" type="date" name="birthdate" value="2017-02-10" required>                            
                 </div>
 
-                <div class="pure-controls">
-                    <input type="submit" class="pure-button pure-button-primary" name ="add" value="add"/>
+                <div class="pure-controls">                    
+                    <input type="button" class="pure-button" name ="clear" value="add"/>
+                    <input type="submit" class="pure-button" name ="add" value="add"/>
+                    <input type="button" class="pure-button" name ="send" value="add"/>                    
                 </div>                         
             </fieldset>                    
         </form>
-
+<br><br><br>
+    <legend>Debug</legend>
         <p><textarea rows="30" cols="50" readonly="true" name="debug">${debugStr}</textarea></p>
     </body>
 </html>
