@@ -39,6 +39,12 @@
             <artifactId>ormlite-jdbc</artifactId>
             <version>5.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.reinert/jjschema -->
+        <dependency>
+            <groupId>com.github.reinert</groupId>
+            <artifactId>jjschema</artifactId>
+            <version>1.4</version>
+        </dependency>
 
     </dependencies>
 
