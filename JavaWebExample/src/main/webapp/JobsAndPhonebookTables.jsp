@@ -4,6 +4,8 @@
     Author     : leon
 --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@page import="com.bor.javawebexample.db.JobRecord" %>
+<%@page import="com.bor.javawebexample.db.PhonebookRecord"%> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -60,5 +62,31 @@
                 </tr>
             </c:forEach> 
         </table>
-    </body>
+
+
+        <br>
+        <hr align="left" width="70%" size="2" />
+        <br>
+
+        <h2>Phonebook table</h2> 
+
+        <table border="1">
+            <tr><th>Id</th><th>Lastname</th><th>Firstname</th><th>Work phone</th>  
+                <th>Mobile phone</th><th>e-mail</th><th>Birthdate</th><th>Job</th></tr>
+                    <c:forEach items="${phonebookList}" var="phone">
+                <tr>
+                    <td>${phone.getId()}</td>
+                    <td>${phone.getLastname()}</td>
+                    <td>${phone.getFirstname()}</td>   
+                    <td>${phone.getWorkPhone()}</td>
+                    <td>${phone.getMobilePhone()}</td>
+                    <td>${phone.getEmail()}</td>
+                    <td>${phone.getStringBirthdate()}</td>
+                    <td>${phone.getJob()}</td>
+                </tr>
+            </c:forEach> 
+        </table>
+
+</html>
+</body>
 </html>

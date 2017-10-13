@@ -38,7 +38,7 @@ public class JobsServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("jobList", jobList);
         request.setAttribute("phonebookList", phonebookList);
-        
+
         request.getRequestDispatcher("/JobsAndPhonebookTables.jsp").forward(request, response);
     }
 
@@ -48,6 +48,10 @@ public class JobsServlet extends HttpServlet {
         if (jobList.isEmpty()) {
             jobList = ORMLiteUtils.getAll(JobRecord.class);
         }
+        if (phonebookList.isEmpty()) {
+            phonebookList = ORMLiteUtils.getAll(PhonebookRecord.class);
+        }
+
         processRequest(request, response);
     }
 
@@ -56,14 +60,20 @@ public class JobsServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         JobRecord record = createJobRecord(request);
+
         if (request.getParameter("add") != null) {
-            ORMLiteUtils.create(JobRecord.class, record);
+            ORMLiteUtils.create(JobRecord.class,
+                     record);
             jobList.add(record);
+
         } else if (request.getParameter("search") != null) {
             if (isEmptySearchPost(record)) {
-                jobList = ORMLiteUtils.getAll(JobRecord.class);
+                jobList = ORMLiteUtils.getAll(JobRecord.class
+                );
+
             } else {
-                jobList = ORMLiteUtils.find(JobRecord.class, record);
+                jobList = ORMLiteUtils.find(JobRecord.class,
+                         record);
             }
         }
 

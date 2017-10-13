@@ -7,6 +7,7 @@ package com.bor.javawebexample.db;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -14,6 +15,7 @@ import java.util.Date;
  *
  * @author leon
  */
+@DatabaseTable(tableName = "Phonebook")
 public class PhonebookRecord {    
 
     @DatabaseField(generatedId = true)
