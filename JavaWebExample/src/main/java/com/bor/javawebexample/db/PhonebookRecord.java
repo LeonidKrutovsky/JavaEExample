@@ -10,6 +10,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -112,6 +113,5 @@ public class PhonebookRecord {
     public void setJob(String job) {
         this.job = job;
     }
-
-    
+   
 }
