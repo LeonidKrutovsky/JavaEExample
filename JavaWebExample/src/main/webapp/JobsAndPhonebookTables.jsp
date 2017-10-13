@@ -19,7 +19,7 @@
 
         <table width="70%"> <tr><td>
 
-                    <form class="pure-form pure-form-aligned" action="jobEditor" method="post"> 
+                    <form class="pure-form pure-form-aligned" action="jobsAndPhonebook" method="post"> 
                         <fieldset>
                             <legend>Edit</legend>
                             <div class="pure-control-group">
@@ -46,7 +46,7 @@
                 </td>
                 <td>
 
-                    <form class="pure-form pure-form-aligned" action="jobEditor" method="post"> 
+                    <form class="pure-form pure-form-aligned" action="jobsAndPhonebook" method="post"> 
                         <fieldset>
                             <legend>Search</legend>
                             <div class="pure-control-group">
