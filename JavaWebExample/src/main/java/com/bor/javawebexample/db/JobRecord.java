@@ -17,9 +17,9 @@ public class JobRecord {
     private String job;
     private String address;
     
-    JobRecord() {}
+    public JobRecord() {}
     
-    JobRecord(String fname, String lname, String job, String address) {
+    public JobRecord(String fname, String lname, String job, String address) {
         this.firstname = fname;
         this.lastname = lname;
         this.job = job;

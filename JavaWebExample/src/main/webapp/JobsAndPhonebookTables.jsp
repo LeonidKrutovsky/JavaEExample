@@ -15,7 +15,7 @@
         <h2>Job Table</h2>
 
         <h3>Edit</h3>  
-        <form action="stub" method="post">  
+        <form action="jobsAndPhonebook" method="post">  
             <table>                
                 <tr><td><input type="text" placeholder="Firstname" name="firstname" autofocus required/></td></tr>
                 <tr><td><input type="text" placeholder="Lastname" name="lastname" required/></td></tr>
