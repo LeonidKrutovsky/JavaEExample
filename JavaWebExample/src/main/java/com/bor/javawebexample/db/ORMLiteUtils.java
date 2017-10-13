@@ -12,6 +12,8 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,8 +26,8 @@ public class ORMLiteUtils {
     private static String databaseUrl = "jdbc:mysql://localhost:3306/test";
     private static String user = "root";
     private static String password = "1";
-    
-    private static final String TAG = ORMLiteUtils.class.getName(); 
+
+    private static final String TAG = ORMLiteUtils.class.getName();
 
     public static <T> void createTable(Class<T> type) {
         try (ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl, user, password)) {
@@ -39,10 +41,23 @@ public class ORMLiteUtils {
         Dao<T, String> dao = null;
         try (ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl, user, password)) {
             dao = DaoManager.createDao(connectionSource, type);
-            dao.create(object);
-            connectionSource.close();
+            dao.create(object);            
         } catch (SQLException | IOException ex) {
             Logger.getLogger(TAG).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static <T> List<T> getAll(Class<T> type) {
+        List<T> list = new ArrayList<>();
+        Dao<T, String> dao = null;
+
+        try (ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl, user, password)) {
+            dao = DaoManager.createDao(connectionSource, type);
+            list = dao.queryForAll();            
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(TAG).log(Level.SEVERE, null, ex);
+        }
+
+        return list;
     }
 }
