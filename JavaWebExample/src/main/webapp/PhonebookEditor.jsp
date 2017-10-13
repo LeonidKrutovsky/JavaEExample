@@ -39,8 +39,7 @@
                 <tr><td>Work phone</td><td><input type="tel"  pattern="\d{3}-\d{3}-\d{2}-\d{2}"  placeholder="xxx-xxx-xx-xx" name="work_phone" required /></td></tr>
                 <tr><td>Mobile phone</td><td><input type="tel" pattern="\d{3}-\d{3}-\d{2}-\d{2}" placeholder="xxx-xxx-xx-xx" name="mobile_phone" required /></td></tr>
                 <tr><td>E-mail</td><td><input type="email" name="email" pattern ="\S{1,30}@\S{1,10}$" required/></td></tr>
-                <tr><td>Birthdate</td><td><input type="date" name="birthdate" required/></td></tr>
-                <tr><td>Job</td><td><input type="text" placeholder="BoR" name="job"required/></td></tr> 
+                <tr><td>Birthdate</td><td><input type="date" name="birthdate" required/></td></tr>                
             </table>  
             <table>
                 <tr><td><input type="submit" name ="clear" value="clear"/></td>
@@ -48,6 +47,8 @@
                     <td><input type="submit" name ="send" value="send"/></td>
                 </tr> 
             </table>            
-        </form>        
+        </form> 
+        
+        <p><textarea rows="30" cols="50" readonly="true" name="debug">${debugStr}</textarea></p>
     </body>
 </html>
