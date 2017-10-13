@@ -17,7 +17,7 @@
                 var tel2 = form.querySelector('input[name="mobile_phone"]');
 
                 function validatePhone() {
-                    if (tel1.value.slice(0, 3) != tel2.value.slice(0, 3)) {
+                    if (tel1.value.slice(0, 3) !== tel2.value.slice(0, 3)) {
                         tel2.setCustomValidity("Error: first three digits of mobile and work phone must bi equal");
                     } else {
                         tel2.setCustomValidity("");
@@ -30,7 +30,6 @@
             document.addEventListener('DOMContentLoaded', initForm);
         </script>
     </head>
-    <body>
     <body>
         <h1>Phonebook Editor</h1>  
         <form id = "PhonebookForm" action="phonebookEditor" method="post">  
@@ -49,7 +48,6 @@
                     <td><input type="submit" name ="send" value="send"/></td>
                 </tr> 
             </table>            
-        </form>
+        </form>        
     </body>
-</body>
 </html>
