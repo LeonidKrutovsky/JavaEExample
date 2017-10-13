@@ -6,6 +6,7 @@
 package com.bor.javawebexample;
 
 import com.bor.javawebexample.db.JobRecord;
+import com.bor.javawebexample.db.ORMLiteUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +43,8 @@ public class JobsServlet extends HttpServlet {
             throws ServletException, IOException {
         if (request.getParameter("add") != null) {            
             JobRecord job = createJobRecord(request);
+            ORMLiteUtils.create(JobRecord.class, job);
             jobList.add(job);
-            
         }
         
         processRequest(request, response);
