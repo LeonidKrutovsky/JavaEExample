@@ -12,6 +12,18 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h2>Job Table</h2>
+
+        <h3>Edit</h3>  
+        <form action="stub" method="post">  
+            <table>                
+                <tr><td><input type="text" placeholder="Firstname" name="firstname" autofocus required/></td></tr>
+                <tr><td><input type="text" placeholder="Lastname" name="lastname" required/></td></tr>
+                <tr><td><input type="text" placeholder="Job" name="job"required/></td></tr>
+                <tr><td><input type="text" placeholder="Address" name="address"required/></td></tr>
+
+                <tr><td><input type="submit" name ="add" value="add"/></td></tr>  
+            </table>  
+        </form>
     </body>
 </html>
