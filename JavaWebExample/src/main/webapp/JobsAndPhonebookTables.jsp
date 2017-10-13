@@ -18,7 +18,7 @@
         <table width="40%"> <tr><td>
 
                     <h3>Edit</h3>  
-                    <form action="jobEditor" method="post">  
+                    <form action="jobsAndPhonebook" method="post">  
                         <table>                
                             <tr><td><input type="text" placeholder="Firstname" name="firstname" autofocus required/></td></tr>
                             <tr><td><input type="text" placeholder="Lastname" name="lastname" required/></td></tr>
@@ -32,7 +32,7 @@
                 <td>
 
                     <h3>Search</h3>  
-                    <form action="jobEditor" method="post">  
+                    <form action="jobsAndPhonebook" method="post">  
                         <table>                
                             <tr><td><input type="text" placeholder="Firstname" name="firstname" /></td></tr>
                             <tr><td><input type="text" placeholder="Lastname" name="lastname" /></td></tr>

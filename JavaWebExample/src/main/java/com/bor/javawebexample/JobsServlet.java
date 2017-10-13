@@ -44,10 +44,17 @@ public class JobsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("add") != null) {            
-            JobRecord job = createJobRecord(request);
-            ORMLiteUtils.create(JobRecord.class, job);
-            jobList.add(job);
+        request.setCharacterEncoding("UTF-8");
+        JobRecord record = createJobRecord(request);
+        if (request.getParameter("add") != null) {  
+            ORMLiteUtils.create(JobRecord.class, record);
+            jobList.add(record);
+        }
+        else if (request.getParameter("search") != null) {
+            if (isEmptyRecord(record))
+                jobList = ORMLiteUtils.getAll(JobRecord.class);
+            else
+                jobList = ORMLiteUtils.find(JobRecord.class, record);
         }
         
         processRequest(request, response);
@@ -69,6 +76,13 @@ public class JobsServlet extends HttpServlet {
         if (temp != null && !temp.isEmpty()) job.setJob(temp);        
 
         return job;
+    }
+    
+    private static boolean isEmptyRecord(JobRecord record) {
+                return record.getLastname() == null
+                && record.getFirstname() == null
+                && record.getJob() == null
+                && record.getAddress() == null;
     }
 
 }
