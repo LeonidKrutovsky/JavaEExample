@@ -33,7 +33,7 @@
     <body>
     <body>
         <h1>Phonebook Editor</h1>  
-        <form id = "PhonebookForm" action="stub" method="post">  
+        <form id = "PhonebookForm" action="phonebookEditor" method="post">  
             <table>                
                 <tr><td>Firstname</td><td><input placeholder="Firstname" name="firstname" maxlength="10" autofocus required/></td></tr>
                 <tr><td>Lastname</td><td><input placeholder="Lastname" name="lastname" maxlength="20" required/></td></tr>
@@ -50,9 +50,6 @@
                 </tr> 
             </table>            
         </form>
-
-        <!--<p><textarea rows="30" cols="50" readonly="true" name="debug">${debugStr}</textarea></p>-->
-
     </body>
 </body>
 </html>

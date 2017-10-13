@@ -4,9 +4,17 @@
         <servlet-name>JobsServlet</servlet-name>
         <servlet-class>com.bor.javawebexample.JobsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PhonebookServlet</servlet-name>
+        <servlet-class>com.bor.javawebexample.PhonebookServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>JobsServlet</servlet-name>
         <url-pattern>/jobsAndPhonebook</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PhonebookServlet</servlet-name>
+        <url-pattern>/phonebookEditor</url-pattern>
     </servlet-mapping>
     <session-config>
 
