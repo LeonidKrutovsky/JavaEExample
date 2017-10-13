@@ -27,6 +27,7 @@ public class JobsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setAttribute("jobList", jobList);
         request.getRequestDispatcher("/JobsAndPhonebookTables.jsp").forward(request, response);
     }
 
@@ -42,7 +43,7 @@ public class JobsServlet extends HttpServlet {
         if (request.getParameter("add") != null) {            
             JobRecord job = createJobRecord(request);
             jobList.add(job);
-            request.setAttribute("jobList", jobList);
+            
         }
         
         processRequest(request, response);
