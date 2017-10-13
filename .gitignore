@@ -12,3 +12,5 @@ nbproject/*
 *.ear
 
 *.log
+/JavaEExample/target/
+/JavaWebExample/target/
