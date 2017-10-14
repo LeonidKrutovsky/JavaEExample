@@ -7,8 +7,11 @@ package com.bor.javawebexample;
 
 import com.bor.javawebexample.db.ORMLiteUtils;
 import com.bor.javawebexample.db.PhonebookRecord;
+import com.bor.javawebexample.fs.JsonFileWriter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,7 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 public class PhonebookServlet extends HttpServlet {
 
     private String debugStr = null;
-    
+    private JsonFileWriter fileWriter = new JsonFileWriter();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -46,19 +50,17 @@ public class PhonebookServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         if (request.getParameter("add") != null) {
-            PhonebookRecord entity = createRecord(request);
-            ORMLiteUtils.create(PhonebookRecord.class, entity); //for debug
-            if (debugStr == null) {
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.enable(SerializationFeature.INDENT_OUTPUT);
-                debugStr = mapper.writeValueAsString(entity);
-                request.setAttribute("debugStr", debugStr);
-            }
-            
+            PhonebookRecord record = createRecord(request);
+            ORMLiteUtils.create(PhonebookRecord.class, record); //for debug
+
+            fileWriter.saveRecord(record);
+            request.setAttribute("debugStr", debugStr);
+
+            processRequest(request, response);
         } else if (request.getParameter("clear") != null) {
-            
+
         }
-        processRequest(request, response);
+
     }
 
     private static PhonebookRecord createRecord(HttpServletRequest request) {
