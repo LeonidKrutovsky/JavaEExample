@@ -1,0 +1,44 @@
+{
+    "type": "object",
+    "description": "Phonebook JSON Schema",
+    "title": "Phonebook",
+    "properties": {
+        "birthdate": {
+            "type": "object",
+            "properties": {        
+                "year": {
+                    "type": "integer",
+                    "minimum": 1900,
+                    "maximum": 2017
+                }
+            },
+            "additionalProperties": true,
+            "required": [
+                "day",
+                "month",
+                "year"        
+            ]
+        },
+        "firstname": {
+            "type": "string",
+            "maxLength": 10
+        },
+        "lastname": {
+            "type": "string",
+            "maxLength": 20
+        },
+        "email": {
+            "type": "string",
+            "pattern": "\\S{1,30}@\\S{1,10}$"
+        }
+    },
+    "additionalProperties": true,
+    "required": [
+        "birthdate",
+        "email",
+        "firstname",
+        "lastname",
+        "mobilePhone",
+        "workPhone"
+    ]
+}
