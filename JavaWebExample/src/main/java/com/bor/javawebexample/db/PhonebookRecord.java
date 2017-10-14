@@ -5,12 +5,14 @@
  */
 package com.bor.javawebexample.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
+
 
 /**
  *
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 @DatabaseTable(tableName = "Phonebook")
 public class PhonebookRecord {    
 
+    @JsonIgnore
     @DatabaseField(generatedId = true)
     private int id;
 
@@ -37,10 +40,11 @@ public class PhonebookRecord {
     @DatabaseField(width = 40)
     private String email;    
 
+    @JsonSerialize(using = JsonDateSerializer.class)
     @DatabaseField(dataType = DataType.DATE)
     private Date birthdate;    
     
-
+    @JsonIgnore
     @DatabaseField
     private String job;
 
@@ -92,6 +96,7 @@ public class PhonebookRecord {
         this.email = email;
     }
 
+    @JsonIgnore
     public String getStringBirthdate() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String retVal = format.format(birthdate);
