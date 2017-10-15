@@ -40,7 +40,7 @@ public class PhonebookRecord {
     @DatabaseField(width = 40)
     private String email;    
 
-    @JsonSerialize(using = JsonDateSerializer.class)
+    //@JsonSerialize(using = JsonDateSerializer.class)
     @DatabaseField(dataType = DataType.DATE)
     private Date birthdate;    
     
