@@ -56,7 +56,7 @@
             </fieldset>                    
         </form>
 <br><br><br>
-    <legend>Debug</legend>
-        <p><textarea rows="30" cols="50" readonly="true" name="debug">${debugStr}</textarea></p>
+<!--    <legend>Debug</legend>
+        <p><textarea rows="30" cols="50" readonly="true" name="debug">${debugStr}</textarea></p>-->
     </body>
 </html>

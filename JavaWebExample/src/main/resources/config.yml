@@ -4,5 +4,5 @@ dbConfig:
   password: '1'
   user: root
 jsondataPath: /home/leon/JEExample/jsondata.txt
-logFilePath: ./log/log.log
-mainDirPath: ./JavaEETest
+logFilePath: /home/leon/JEExample/log.log
+mainDirPath: /home/leon/JEExample

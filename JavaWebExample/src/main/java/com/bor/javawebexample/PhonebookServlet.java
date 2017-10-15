@@ -35,6 +35,7 @@ public class PhonebookServlet extends HttpServlet {
         super.init(config);
         Configuration conf = (Configuration) getServletContext().getAttribute("config");
         fileWriter = new JsonFileWriter(conf.getJsondataPath());
+        JsonFileWriter.prepareDirs(conf.getMainDirPath());
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -59,6 +60,8 @@ public class PhonebookServlet extends HttpServlet {
             processRequest(request, response);
         } else if (request.getParameter("clear") != null) {
 
+        } else if (request.getParameter("send") != null) {
+            
         }
 
     }
