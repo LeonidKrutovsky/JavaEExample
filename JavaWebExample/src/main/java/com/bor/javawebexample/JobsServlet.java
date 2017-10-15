@@ -8,9 +8,11 @@ package com.bor.javawebexample;
 import com.bor.javawebexample.db.JobRecord;
 import com.bor.javawebexample.db.ORMLiteUtils;
 import com.bor.javawebexample.db.PhonebookRecord;
+import com.bor.javawebexample.fs.Configuration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,15 +28,19 @@ public class JobsServlet extends HttpServlet {
 
     private List<JobRecord> jobList = new ArrayList<>();
     private List<PhonebookRecord> phonebookList = new ArrayList<>();
-    private boolean isCreate = false;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        Configuration conf = (Configuration) getServletContext().getAttribute("config");
+
+        ORMLiteUtils.init(conf.getDbConfig());
+        ORMLiteUtils.createTable(JobRecord.class);
+        ORMLiteUtils.createTable(PhonebookRecord.class);
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (!isCreate) {
-            ORMLiteUtils.createTable(JobRecord.class);
-            ORMLiteUtils.createTable(PhonebookRecord.class);
-            isCreate = true;
-        }
         response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("jobList", jobList);
         request.setAttribute("phonebookList", phonebookList);
@@ -62,18 +68,13 @@ public class JobsServlet extends HttpServlet {
         JobRecord record = createJobRecord(request);
 
         if (request.getParameter("add") != null) {
-            ORMLiteUtils.create(JobRecord.class,
-                     record);
+            ORMLiteUtils.create(JobRecord.class, record);
             jobList.add(record);
-
         } else if (request.getParameter("search") != null) {
             if (isEmptySearchPost(record)) {
-                jobList = ORMLiteUtils.getAll(JobRecord.class
-                );
-
+                jobList = ORMLiteUtils.getAll(JobRecord.class);
             } else {
-                jobList = ORMLiteUtils.find(JobRecord.class,
-                         record);
+                jobList = ORMLiteUtils.find(JobRecord.class, record);
             }
         }
 
