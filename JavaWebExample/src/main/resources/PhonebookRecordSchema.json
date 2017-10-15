@@ -4,20 +4,8 @@
     "title": "Phonebook",
     "properties": {
         "birthdate": {
-            "type": "object",
-            "properties": {        
-                "year": {
-                    "type": "integer",
-                    "minimum": 1900,
-                    "maximum": 2017
-                }
-            },
-            "additionalProperties": true,
-            "required": [
-                "day",
-                "month",
-                "year"        
-            ]
+            "type": "string",
+            "pattern": "[0-3][0-9].[0,1][0-9].([1][9][0-9][0-9]|[2][0][0-9][0-9])$"
         },
         "firstname": {
             "type": "string",
