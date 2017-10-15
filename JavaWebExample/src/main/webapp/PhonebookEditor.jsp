@@ -45,7 +45,7 @@
 
                 <div class="pure-control-group">
                     <label for="birthdate">Birthdate</label>
-                    <input id="birthdate" type="date" name="birthdate" value="2017-02-10" required>                            
+                    <input id="birthdate" type="date" name="birthdate" required>                            
                 </div>
 
                 <div class="pure-controls">                    

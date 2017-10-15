@@ -13,5 +13,23 @@ function initForm() {
     form.addEventListener('submit', validatePhone);
     tel1.addEventListener('change', validatePhone);
     tel2.addEventListener('change', validatePhone);
+
+    var dateInput = form.querySelector('input[name="birthdate"]');
+            var now = new Date();
+
+    function validateDate() {
+        var curDate = new Date(dateInput.value);
+        if (curDate.getFullYear() < 1900) {
+            dateInput.setCustomValidity("Year must be > 1900");
+        } else if (curDate.getFullYear() > now.getFullYear())
+        {
+            dateInput.setCustomValidity("Year must be <= this year");
+        } else {
+            dateInput.setCustomValidity("");
+        }
+    }
+
+    form.addEventListener('submit', validateDate);
+    dateInput.addEventListener('change', validateDate);
 }
 document.addEventListener('DOMContentLoaded', initForm);
