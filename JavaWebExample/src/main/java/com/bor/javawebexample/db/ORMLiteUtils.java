@@ -7,7 +7,6 @@ package com.bor.javawebexample.db;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -24,10 +23,17 @@ import java.util.logging.Logger;
  */
 public class ORMLiteUtils {
 ///TODO(leon): move to config
-    private static String databaseUrl = "jdbc:mysql://localhost:3306/test";
-    private static String user = "root";
-    private static String password = "1";
-    private static Logger logger = Logger.getLogger(ORMLiteUtils.class.getName());
+    private static String databaseUrl;
+    private static String user;
+    private static String password;
+    private static final Logger logger = Logger.getLogger(ORMLiteUtils.class.getName());
+    
+    
+    public static void  init (DbConfig config) {
+        databaseUrl = config.getDatabaseUrl();
+        user = config.getUser();
+        password = config.getPassword();
+    }
 
 
     public static <T> void createTable(Class<T> type) {
