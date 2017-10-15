@@ -5,18 +5,16 @@
  */
 package com.bor.javawebexample;
 
-import com.bor.javawebexample.db.ORMLiteUtils;
+
 import com.bor.javawebexample.db.PhonebookRecord;
+import com.bor.javawebexample.fs.Configuration;
 import com.bor.javawebexample.fs.JsonFileWriter;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,8 +28,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "PhonebookServlet", urlPatterns = {"/phonebookEditor"})
 public class PhonebookServlet extends HttpServlet {
 
-    private String debugStr = null;
-    private JsonFileWriter fileWriter = new JsonFileWriter();
+    private JsonFileWriter fileWriter;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        Configuration conf = (Configuration) getServletContext().getAttribute("config");
+        fileWriter = new JsonFileWriter(conf.getJsondataPath());
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,12 +54,8 @@ public class PhonebookServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         if (request.getParameter("add") != null) {
-            PhonebookRecord record = createRecord(request);
-            ORMLiteUtils.create(PhonebookRecord.class, record); //for debug
-
+            PhonebookRecord record = createRecord(request); 
             fileWriter.saveRecord(record);
-            request.setAttribute("debugStr", debugStr);
-
             processRequest(request, response);
         } else if (request.getParameter("clear") != null) {
 

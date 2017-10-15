@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,8 +19,14 @@ import java.util.logging.Logger;
  * @author leon
  */
 public class JsonFileWriter {
-    private File jsondataFile = new File(System.getProperty("user.home") + "/jsondata.txt");
-    ObjectMapper mapper = new ObjectMapper();
+    
+    private File jsondataFile;
+    private ObjectMapper mapper = new ObjectMapper();
+    
+    public JsonFileWriter(String jsondataFilePath) {
+        jsondataFile = new File(jsondataFilePath);          
+        mapper.setDateFormat(new SimpleDateFormat("dd.MM.yyyy"));
+    }
     
     public void saveRecord(PhonebookRecord record) {        
 //        mapper.enable(SerializationFeature.INDENT_OUTPUT);
