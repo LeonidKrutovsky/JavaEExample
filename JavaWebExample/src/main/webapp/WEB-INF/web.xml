@@ -16,6 +16,17 @@
         <servlet-name>PhonebookServlet</servlet-name>
         <url-pattern>/phonebookEditor</url-pattern>
     </servlet-mapping>
+    
+    <listener>
+        <listener-class>
+            com.bor.javawebexample.InitializerContextListener
+        </listener-class>
+    </listener>
+    
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    
     <session-config>
 
     </session-config>
