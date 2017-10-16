@@ -48,15 +48,23 @@
                     <input id="birthdate" type="date" name="birthdate" required>                            
                 </div>
 
-                <div class="pure-controls">                    
-                    <input type="button" class="pure-button" name ="clear" value="clear"/>
-                    <input type="submit" class="pure-button" name ="add" value="add"/>
-                    <input type="button" class="pure-button" name ="send" value="send"/>                    
+                <div class="pure-controls"> 
+                    <input type="submit" class="pure-button pure-button-primary" name ="add" value="add"/>
                 </div>                         
             </fieldset>                    
         </form>
-<br><br><br>
-<!--    <legend>Debug</legend>
-        <p><textarea rows="30" cols="50" readonly="true" name="debug">${debugStr}</textarea></p>-->
+        <form class="pure-form pure-form-aligned" action="phonebookEditor" method="post"> 
+            <fieldset>
+                <div class="pure-controls">                    
+                    <input type="submit" class="pure-button" name ="clear" value="clear"/>                    
+                    <input type="submit" class="pure-button" name ="send" value="send" /> 
+                    <label>${statusStr}</label>
+                </div>      
+            </fieldset>
+        </form>
+
+        <br><br><br>
+        <!--    <legend>Debug</legend>
+                <p><textarea rows="30" cols="50" readonly="true" name="debug">${debugStr}</textarea></p>-->
     </body>
 </html>
