@@ -29,18 +29,20 @@ import javax.servlet.http.HttpServletResponse;
 public class PhonebookServlet extends HttpServlet {
 
     private JsonFileWriter fileWriter;
+    private static String status = "";
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         Configuration conf = (Configuration) getServletContext().getAttribute("config");
         fileWriter = new JsonFileWriter(conf.getJsondataPath());
-        JsonFileWriter.prepareDirs(conf.getMainDirPath());
+        JsonFileWriter.prepareDirs(conf.getMainDirPath());        
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setAttribute("statusStr", status);
         request.getRequestDispatcher("/PhonebookEditor.jsp").forward(request, response);
     }
 
@@ -56,14 +58,15 @@ public class PhonebookServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         if (request.getParameter("add") != null) {
             PhonebookRecord record = createRecord(request); 
-            fileWriter.saveRecord(record);
-            processRequest(request, response);
+            fileWriter.saveRecord(record);  
+            status = "";
         } else if (request.getParameter("clear") != null) {
-
+            status = "cleared";
         } else if (request.getParameter("send") != null) {
-            
+            fileWriter.sendToWork();
+            status = "sent to work";
         }
-
+        processRequest(request, response);
     }
 
     private static PhonebookRecord createRecord(HttpServletRequest request) {
