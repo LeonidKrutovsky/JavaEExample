@@ -61,6 +61,7 @@ public class PhonebookServlet extends HttpServlet {
             fileWriter.saveRecord(record);  
             status = "";
         } else if (request.getParameter("clear") != null) {
+            fileWriter.clear();
             status = "cleared";
         } else if (request.getParameter("send") != null) {
             fileWriter.sendToWork();

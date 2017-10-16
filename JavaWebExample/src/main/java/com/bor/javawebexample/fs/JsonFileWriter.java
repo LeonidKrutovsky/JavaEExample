@@ -111,4 +111,11 @@ public class JsonFileWriter {
             file.delete();
         }
     }
+    
+    public void clear() {
+        File[] files = prepareDir.listFiles();
+        for (File file : files) {
+            file.delete();
+        }
+    }
 }
