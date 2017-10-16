@@ -65,11 +65,11 @@ public class JobsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        JobRecord record = createJobRecord(request);
-
+        JobRecord record = createJobRecord(request);       
+        
         if (request.getParameter("add") != null) {
-            ORMLiteUtils.create(JobRecord.class, record);
-            jobList.add(record);
+            if (ORMLiteUtils.create(JobRecord.class, record))
+                jobList.add(record);
         } else if (request.getParameter("search") != null) {
             if (isEmptySearchPost(record)) {
                 jobList = ORMLiteUtils.getAll(JobRecord.class);

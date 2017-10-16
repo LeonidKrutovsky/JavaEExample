@@ -60,7 +60,7 @@ public class JsonFileWriter {
         try (FileWriter writer = new FileWriter(jsondataFile, true)) {
             writer.write(json);
         } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            System.err.println("*****saveRecord*****    " + ex);
         }
 
         Date today = Calendar.getInstance().getTime();
@@ -69,7 +69,7 @@ public class JsonFileWriter {
         try (FileWriter writer = new FileWriter(file, true)) {
             writer.write(json);
         } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            System.err.println("*****saveRecord*****   " + ex);
         }
     }
 
@@ -82,7 +82,7 @@ public class JsonFileWriter {
                 List<String> lines = Files.readAllLines(Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8);
                 stringList.addAll(lines);
             } catch (IOException ex) {
-                LOGGER.log(Level.SEVERE, null, ex);
+                System.err.println("*****sendToWork*****   " + ex);
             }
         }
         
@@ -104,7 +104,7 @@ public class JsonFileWriter {
             File fileFlag = new File(destFilePath + ".ready");
             fileFlag.createNewFile();
         } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            System.err.println("*****sendToWork*****   " + ex);
         } 
 
         for (File file : files) {

@@ -26,7 +26,7 @@ public class ORMLiteUtils {
     private static String databaseUrl;
     private static String user;
     private static String password;
-    private static final Logger logger = Logger.getLogger(ORMLiteUtils.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ORMLiteUtils.class.getName());
     
     
     public static void  init (DbConfig config) {
@@ -40,18 +40,22 @@ public class ORMLiteUtils {
         try (ConnectionSource connectionSource = new JdbcPooledConnectionSource(databaseUrl, user, password)) {
             TableUtils.createTableIfNotExists(connectionSource, type);
         } catch (SQLException | IOException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, null, ex);
         }
     }
 
-    public static <T> void create(Class<T> type, T object) {
+    public static <T> boolean create(Class<T> type, T object) {
+        boolean retVal;
         Dao<T, String> dao = null;
         try (ConnectionSource connectionSource = new JdbcPooledConnectionSource(databaseUrl, user, password)) {
             dao = DaoManager.createDao(connectionSource, type);
             dao.create(object);
+            retVal = true;
         } catch (SQLException | IOException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, null, ex);
+            retVal = false;
         }
+        return retVal;
     }
 
     public static <T> List<T> getAll(Class<T> type) {
@@ -62,7 +66,7 @@ public class ORMLiteUtils {
             dao = DaoManager.createDao(connectionSource, type);
             list = dao.queryForAll();
         } catch (SQLException | IOException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, null, ex);
         }
 
         return list;
@@ -76,7 +80,7 @@ public class ORMLiteUtils {
             dao = DaoManager.createDao(connectionSource, type);
             list = dao.queryForMatchingArgs(matchObj);
         } catch (SQLException | IOException ex) {
-            logger.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, null, ex);
         }
 
         return list;
