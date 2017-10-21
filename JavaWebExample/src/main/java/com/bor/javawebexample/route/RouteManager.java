@@ -35,10 +35,10 @@ public class RouteManager {
             @Override
             public void configure() {
                 from("file:/home/leon/JEExample/work?doneFileName=${file:name.noext}.ready&delete=true")
-                        //.split(body().tokenize(System.getProperty("line.separator"))) 
-                        //.filter().method(new JsonFilter(""), "isValid")
                         .process(new PhonebookRecordValidator())
-                        .to("file:/home/leon/JEExample/data?noop=true");
+                        .to("file:/home/leon/JEExample/data")
+                        .process(new PhonebookRecordProcessor())
+                        .to("file:/home/leon/JEExample/data");
             }
         });
         context.start();
