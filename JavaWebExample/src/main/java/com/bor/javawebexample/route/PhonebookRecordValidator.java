@@ -76,7 +76,7 @@ public class PhonebookRecordValidator implements Processor {
                 return result;
             }
 
-        } catch (IOException | ProcessingException ex) {
+        } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
         return result;
@@ -147,7 +147,7 @@ public class PhonebookRecordValidator implements Processor {
                 outList.add(str);
             else
                 LOGGER.log(Level.INFO, null, res.report);
-        }
+        }        
         
         String log = MessageFormat.format(LOG_FORMAT, fileName, list.length, outList.size()); 
         LOGGER.log(Level.SEVERE, null, log);

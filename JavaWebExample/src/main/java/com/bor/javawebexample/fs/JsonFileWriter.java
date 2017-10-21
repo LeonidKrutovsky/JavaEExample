@@ -54,12 +54,12 @@ public class JsonFileWriter {
 
     public JsonFileWriter(String jsondataFilePath) {
         jsondataFile = new File(jsondataFilePath);
-        mapper.setDateFormat(new SimpleDateFormat("dd.MM.yyyy"));
+        mapper.setDateFormat(new SimpleDateFormat("dd.MM.yyyy"));        
     }
 
     public void saveRecord(PhonebookRecord record) throws JsonProcessingException {
 //        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        String json = mapper.writeValueAsString(record);
+        String json = mapper.writeValueAsString(record);  
 
         try (FileWriter writer = new FileWriter(jsondataFile, true)) {
             writer.write(json + System.getProperty("line.separator"));
