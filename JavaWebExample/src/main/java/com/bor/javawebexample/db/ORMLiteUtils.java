@@ -22,7 +22,6 @@ import java.util.logging.Logger;
  * @author leon
  */
 public class ORMLiteUtils {
-///TODO(leon): move to config
     private static String databaseUrl;
     private static String user;
     private static String password;
@@ -46,10 +45,9 @@ public class ORMLiteUtils {
 
     public static <T> boolean create(Class<T> type, T object) {
         boolean retVal;
-        Dao<T, String> dao = null;
-        try (ConnectionSource connectionSource = new JdbcPooledConnectionSource(databaseUrl, user, password)) {
-            dao = DaoManager.createDao(connectionSource, type);
-            dao.create(object);
+        
+        try (ConnectionSource connectionSource = new JdbcPooledConnectionSource(databaseUrl, user, password)) {            
+            DaoManager.createDao(connectionSource, type).create(object);
             retVal = true;
         } catch (SQLException | IOException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
@@ -60,10 +58,9 @@ public class ORMLiteUtils {
 
     public static <T> List<T> getAll(Class<T> type) {
         List<T> list = new ArrayList<>();
-        Dao<T, String> dao = null;
-
+        
         try (ConnectionSource connectionSource = new JdbcPooledConnectionSource(databaseUrl, user, password)) {
-            dao = DaoManager.createDao(connectionSource, type);
+            Dao<T, String> dao = DaoManager.createDao(connectionSource, type);
             list = dao.queryForAll();
         } catch (SQLException | IOException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
@@ -74,10 +71,9 @@ public class ORMLiteUtils {
 
     public static <T> List<T> find(Class<T> type, T matchObj) {
         List<T> list = new ArrayList<>();
-        Dao<T, String> dao = null;
-
+        
         try (ConnectionSource connectionSource = new JdbcPooledConnectionSource(databaseUrl, user, password)) {
-            dao = DaoManager.createDao(connectionSource, type);
+            Dao<T, String> dao = DaoManager.createDao(connectionSource, type);
             list = dao.queryForMatchingArgs(matchObj);
         } catch (SQLException | IOException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
