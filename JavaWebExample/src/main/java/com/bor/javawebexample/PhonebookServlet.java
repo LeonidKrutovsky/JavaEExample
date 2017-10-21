@@ -9,6 +9,7 @@ package com.bor.javawebexample;
 import com.bor.javawebexample.db.PhonebookRecord;
 import com.bor.javawebexample.fs.Configuration;
 import com.bor.javawebexample.fs.JsonFileWriter;
+import com.bor.javawebexample.route.RouteManager;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,13 +31,15 @@ public class PhonebookServlet extends HttpServlet {
 
     private JsonFileWriter fileWriter;
     private static String status = "";
+    private RouteManager routeManager;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);        
         Configuration conf = (Configuration) getServletContext().getAttribute("config");
         fileWriter = new JsonFileWriter(conf.getJsondataPath());
-        JsonFileWriter.prepareDirs(conf.getMainDirPath());        
+        JsonFileWriter.prepareDirs(conf.getMainDirPath());
+        routeManager = new RouteManager();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -65,7 +68,7 @@ public class PhonebookServlet extends HttpServlet {
             status = "cleared";
         } else if (request.getParameter("send") != null) {
             fileWriter.sendToWork();
-            status = "sent to work";
+            status = "sent to work";            
         }
         processRequest(request, response);
     }
