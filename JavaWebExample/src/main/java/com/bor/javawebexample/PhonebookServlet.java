@@ -33,7 +33,7 @@ public class PhonebookServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        super.init(config);
+        super.init(config);        
         Configuration conf = (Configuration) getServletContext().getAttribute("config");
         fileWriter = new JsonFileWriter(conf.getJsondataPath());
         JsonFileWriter.prepareDirs(conf.getMainDirPath());        
