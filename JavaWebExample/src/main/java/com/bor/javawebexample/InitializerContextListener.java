@@ -5,21 +5,9 @@
  */
 package com.bor.javawebexample;
 
+import com.bor.javawebexample.db.ORMLiteUtils;
 import com.bor.javawebexample.fs.Configuration;
-import com.bor.javawebexample.route.PhonebookRecordValidator;
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.StreamHandler;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import org.yaml.snakeyaml.Yaml;
@@ -43,6 +31,7 @@ public class InitializerContextListener implements ServletContextListener {
             } else {
                 conf = new Yaml().loadAs(input, Configuration.class);
             }
+            ORMLiteUtils.init(conf.getDbConfig());
 
 //            try {
 //                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(conf.getLogFilePath(), true)), true));

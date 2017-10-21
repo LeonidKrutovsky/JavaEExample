@@ -33,8 +33,7 @@ public class JobsServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         Configuration conf = (Configuration) getServletContext().getAttribute("config");
-
-        ORMLiteUtils.init(conf.getDbConfig());
+        
         ORMLiteUtils.createTable(JobRecord.class);
         ORMLiteUtils.createTable(PhonebookRecord.class);
     }
@@ -54,9 +53,9 @@ public class JobsServlet extends HttpServlet {
         if (jobList.isEmpty()) {
             jobList = ORMLiteUtils.getAll(JobRecord.class);
         }
-        if (phonebookList.isEmpty()) {
-            phonebookList = ORMLiteUtils.getAll(PhonebookRecord.class);
-        }
+        
+        phonebookList = ORMLiteUtils.getAll(PhonebookRecord.class);
+        
 
         processRequest(request, response);
     }
