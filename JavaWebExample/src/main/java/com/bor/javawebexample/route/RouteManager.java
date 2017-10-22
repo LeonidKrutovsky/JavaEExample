@@ -5,11 +5,11 @@
  */
 package com.bor.javawebexample.route;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -17,28 +17,35 @@ import org.apache.camel.impl.DefaultCamelContext;
  */
 public class RouteManager {
 
-    public RouteManager() {
-        
+    private static final Logger LOGGER = LoggerFactory.getLogger(RouteManager.class);
+    private final String mainDir;
+
+    public RouteManager(String mainDir, String logFilePath) {
+
+        this.mainDir = mainDir;
         String schemaUrl = getClass().getClassLoader().getResource("/PhonebookRecordSchema.json").getPath();
         PhonebookRecordValidator.loadSchema(schemaUrl);
         try {
             start();
         } catch (Exception ex) {
-            Logger.getLogger(RouteManager.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.warn(ex.toString());
         }
+        
+        System.setProperty("log.name", logFilePath);
     }
 
     private void start() throws Exception {
-        
+
         CamelContext context = new DefaultCamelContext();
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() {
-                from("file:/home/leon/JEExample/work?doneFileName=${file:name.noext}.ready&delete=true")
+                from("file:" + mainDir + "/work?doneFileName=${file:name.noext}.ready&delete=true")
                         .process(new PhonebookRecordValidator())
-                        .to("file:/home/leon/JEExample/data")
+                        //.to("file:/home/leon/JEExample/data")
                         .process(new PhonebookRecordEnricher())
-                        .to("file:/home/leon/JEExample/data");
+                        .to("file:" + mainDir + "/data")
+                        .process(new PhonebookDbTransmitter());
             }
         });
         context.start();

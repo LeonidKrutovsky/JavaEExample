@@ -39,7 +39,7 @@ public class PhonebookServlet extends HttpServlet {
         Configuration conf = (Configuration) getServletContext().getAttribute("config");
         fileWriter = new JsonFileWriter(conf.getJsondataPath());
         JsonFileWriter.prepareDirs(conf.getMainDirPath());
-        routeManager = new RouteManager();
+        routeManager = new RouteManager(conf.getMainDirPath(), conf.getLogFilePath());
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
