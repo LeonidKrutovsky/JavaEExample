@@ -37,7 +37,7 @@ public class RouteManager {
                 from("file:/home/leon/JEExample/work?doneFileName=${file:name.noext}.ready&delete=true")
                         .process(new PhonebookRecordValidator())
                         .to("file:/home/leon/JEExample/data")
-                        .process(new PhonebookRecordProcessor())
+                        .process(new PhonebookRecordEnricher())
                         .to("file:/home/leon/JEExample/data");
             }
         });

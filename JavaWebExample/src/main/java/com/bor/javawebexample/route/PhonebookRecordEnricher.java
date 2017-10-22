@@ -20,13 +20,13 @@ import org.apache.camel.Processor;
  *
  * @author leon
  */
-public class PhonebookRecordProcessor implements Processor {
+public class PhonebookRecordEnricher implements Processor {
 
     private static final String SEPARATOR = System.getProperty("line.separator");
     private final ObjectMapper MAPPER = new ObjectMapper();
     private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(PhonebookRecordValidator.class.getName());
 
-    public PhonebookRecordProcessor() {
+    public PhonebookRecordEnricher() {
 
         MAPPER.setDateFormat(new SimpleDateFormat("dd.MM.yyyy"));
     }
