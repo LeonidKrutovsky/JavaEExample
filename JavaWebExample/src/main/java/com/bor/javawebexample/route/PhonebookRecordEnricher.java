@@ -7,14 +7,17 @@ package com.bor.javawebexample.route;
 
 import com.bor.javawebexample.db.JobRecord;
 import com.bor.javawebexample.db.ORMLiteUtils;
-import com.bor.javawebexample.db.PhonebookRecord;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -24,7 +27,7 @@ public class PhonebookRecordEnricher implements Processor {
 
     private static final String SEPARATOR = System.getProperty("line.separator");
     private final ObjectMapper MAPPER = new ObjectMapper();
-    private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(PhonebookRecordValidator.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PhonebookRecordEnricher.class);
 
     public PhonebookRecordEnricher() {
 
@@ -33,32 +36,36 @@ public class PhonebookRecordEnricher implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
+        
         String body = exchange.getIn().getBody(String.class);
         String[] list = body.split(SEPARATOR);
 
-        PhonebookRecord record = null;
+        ObjectNode objectNode = null;
         List<String> outList = new ArrayList<>();
         for (String str : list) {
             try {
-                record = MAPPER.readValue(str, PhonebookRecord.class);
+                objectNode = (ObjectNode)MAPPER.readTree(str);
                 JobRecord matchObj = new JobRecord();
-                matchObj.setLastname(record.getLastname());
-                matchObj.setFirstname(record.getFirstname());
+                matchObj.setLastname(objectNode.get("lastname").textValue());
+                matchObj.setFirstname(objectNode.get("firstname").textValue());
                 List<JobRecord> jobs = ORMLiteUtils.find(JobRecord.class, matchObj);
+                
                 if (!jobs.isEmpty()) {
                     JobRecord jobRecord = jobs.get(0);
-                    record.setJob(jobRecord.getJob());
+                    objectNode.put("job", jobRecord.getJob());
                 } else {
-                    record.setJob("workless!");
+                    objectNode.put("job", "workless!");
                 }
-                ORMLiteUtils.create(PhonebookRecord.class, record);
-                outList.add(MAPPER.writeValueAsString(record));
-            } catch (Exception ex) {
-                LOGGER.log(Level.SEVERE, null, ex);
+                String textValue = MAPPER.writeValueAsString(objectNode);
+                outList.add(textValue);
+                LOGGER.info("Enrich file by a job value " + objectNode.get("job").textValue());
+            } catch (IOException ex) {                
+                LOGGER.warn(ex.toString());
             }
         }
 
         exchange.getOut().setBody(String.join(SEPARATOR, outList));
         exchange.getOut().setHeaders(exchange.getIn().getHeaders());
     }
+        
 }

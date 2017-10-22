@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -36,21 +36,22 @@ public class PhonebookRecordValidator implements Processor {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static JsonSchema schema = null;
-    private static final Logger LOGGER = Logger.getLogger(PhonebookRecordValidator.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PhonebookRecordValidator.class.getName());
     private static final String SEPARATOR = System.getProperty("line.separator");
     private static final String LOG_FORMAT = "Take file: {0}. Record count: {1}, valid records: {2}";
+    
 
-    public static boolean loadSchema(String url) {        
+    public static boolean loadSchema(String url) {
         File schemaFile = new File(url);
         try {
             String js = new String(Files.readAllBytes(Paths.get(schemaFile.getAbsolutePath())));
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode fstabSchema = mapper.readTree(js);            
+            JsonNode fstabSchema = mapper.readTree(js);
             final JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
             schema = factory.getJsonSchema(fstabSchema);
             return true;
         } catch (IOException | ProcessingException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.debug(ex.toString());
         }
         return false;
     }
@@ -71,19 +72,19 @@ public class PhonebookRecordValidator implements Processor {
             if (!isPhonesValid(actualObj, result)) {
                 return result;
             }
-            
+
             if (!isDateValid(actualObj, result)) {
                 return result;
             }
 
-        } catch (Exception ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+        } catch (ProcessingException | IOException ex) {
+            LOGGER.debug(ex.toString());
         }
         return result;
     }
 
     private static boolean isPhonesValid(JsonNode node, ValidationResult result) {
-        
+
         String workPhone = node.get("workPhone").textValue();
         String mobilePhone = node.get("mobilePhone").textValue();
 
@@ -100,27 +101,27 @@ public class PhonebookRecordValidator implements Processor {
     }
 
     private static boolean isDateValid(JsonNode node, ValidationResult result) {
-        
+
         String dateString = node.get("birthdate").textValue();
         try {
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
             Date date = format.parse(dateString);
-            
+
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
             int year = cal.get(Calendar.YEAR);
             cal.setTime(new Date());
             int nowYaer = cal.get(Calendar.YEAR);
-            
+
             if (year < 1900 || year > nowYaer) {
                 result.report = "\n" + "--- BEGIN MESSAGES --- \n"
                         + "Error birthday year: \n"
-                        + "Must be in range from 1900 to " + nowYaer                    
+                        + "Must be in range from 1900 to " + nowYaer
                         + "\n---  END MESSAGES  ---";
                 return result.isValid = false;
             }
-        } catch (ParseException ex) {            
-            LOGGER.log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            LOGGER.debug(ex.toString());
             result.report = "Parsing date error";
             return result.isValid = false;
         }
@@ -129,31 +130,32 @@ public class PhonebookRecordValidator implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        
+
         if (exchange.isFailed()) {
-            LOGGER.log(Level.SEVERE, null, "Exchange failed: " + exchange.getProperty(Exchange.EXCEPTION_CAUGHT));            
-            return; 
+            LOGGER.debug("Exchange failed: " + exchange.getProperty(Exchange.EXCEPTION_CAUGHT));
+            return;
         }
-        
+
         String fileName = exchange.getIn().getHeader(Exchange.FILE_NAME, String.class);
-        
+
         String body = exchange.getIn().getBody(String.class);
-        String[] list = body.split(SEPARATOR); 
-        
+        String[] list = body.split(SEPARATOR);
+
         List<String> outList = new ArrayList<>();
         for (String str : list) {
             ValidationResult res = validate(str);
-            if (res.isValid)
+            if (res.isValid) {
                 outList.add(str);
-            else
-                LOGGER.log(Level.INFO, null, res.report);
-        }        
-        
-        String log = MessageFormat.format(LOG_FORMAT, fileName, list.length, outList.size()); 
-        LOGGER.log(Level.SEVERE, null, log);
-        
+            } else {
+                LOGGER.debug(res.report);
+            }
+        }
+
+        String log = MessageFormat.format(LOG_FORMAT, fileName, list.length, outList.size());
+        LOGGER.debug(log);
+
         exchange.getOut().setBody(String.join(SEPARATOR, outList));
-        exchange.getOut().setHeaders(exchange.getIn().getHeaders());         
+        exchange.getOut().setHeaders(exchange.getIn().getHeaders());
     }
 
 }

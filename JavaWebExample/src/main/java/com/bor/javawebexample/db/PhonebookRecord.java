@@ -43,7 +43,7 @@ public class PhonebookRecord {
     @DatabaseField(dataType = DataType.DATE)
     private Date birthdate;    
     
-    @JsonIgnore
+    //@JsonIgnore
     @DatabaseField
     private String job;
 
