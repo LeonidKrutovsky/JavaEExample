@@ -31,24 +31,7 @@ public class InitializerContextListener implements ServletContextListener {
             } else {
                 conf = new Yaml().loadAs(input, Configuration.class);
             }
-            ORMLiteUtils.init(conf.getDbConfig());
-
-//            try {
-//                System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(conf.getLogFilePath(), true)), true));
-//            } catch (FileNotFoundException ex) {
-//                Logger.getLogger(InitializerContextListener.class.getName()).log(Level.SEVERE, null, ex);
-//            }        
-//            Logger logger = Logger.getLogger(InitializerContextListener.class.getName());
-//            try {
-//                FileHandler handler = new FileHandler(conf.getLogFilePath(), true);
-//                handler.setFormatter(new SimpleFormatter());
-//                logger.addHandler(handler);
-//            } catch (IOException | SecurityException ex) {
-//                Logger.getLogger(InitializerContextListener.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            
-//            logger.log(Level.SEVERE, null, "Heelo2222");
-            
+            ORMLiteUtils.init(conf.getDbConfig());            
         }
 
         event.getServletContext().setAttribute(ATTRIBUTE_NAME, conf);
