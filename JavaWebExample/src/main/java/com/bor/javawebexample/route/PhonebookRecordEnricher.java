@@ -51,7 +51,7 @@ public class PhonebookRecordEnricher implements Processor {
                 
                 if (!jobs.isEmpty()) {
                     JobRecord jobRecord = jobs.get(0);
-                    objectNode.put("job", jobRecord.getJob());
+                    objectNode.put("job", jobRecord.getJob() + " " + jobRecord.getAddress());
                 } else {
                     objectNode.put("job", "workless!");
                 }
