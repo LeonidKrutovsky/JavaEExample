@@ -34,7 +34,7 @@ public class JsonFileWriter {
     private static File workDir;
     private static File prepareDir;
     private static File dataDir;
-    private static final DateFormat df = new SimpleDateFormat("ddMMyy_HHmm");
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("ddMMyy_HHmm");
     private static final Logger LOGGER = Logger.getLogger(JsonFileWriter.class.getName());
 
     public static void prepareDirs(String mainDirPath) {
@@ -68,7 +68,7 @@ public class JsonFileWriter {
         }
 
         Date today = Calendar.getInstance().getTime();
-        File file = new File(prepareDir.getAbsolutePath() + File.separator + "data_" + df.format(today) + ".json");
+        File file = new File(prepareDir.getAbsolutePath() + File.separator + "data_" + DATE_FORMAT.format(today) + ".json");
 
         try (FileWriter writer = new FileWriter(file, true)) {
             writer.write(json + System.getProperty("line.separator"));
@@ -96,7 +96,7 @@ public class JsonFileWriter {
         }
 
         Date today = Calendar.getInstance().getTime();
-        String destFilePath = workDir.getAbsolutePath() + File.separator + "json_" + df.format(today);
+        String destFilePath = workDir.getAbsolutePath() + File.separator + "json_" + DATE_FORMAT.format(today);
         File destinationFile = new File(destFilePath + ".txt");
 
         if (destinationFile.exists()) {
