@@ -20,27 +20,27 @@
                 <legend>Edit</legend>
                 <div class="pure-control-group">
                     <label for="firstname">Firstname</label>
-                    <input id="firstname" name="firstname" type="text" placeholder="Firstname" value="Leonid" autofocus required>                            
+                    <input id="firstname" name="firstname" type="text" placeholder="Firstname" autofocus required>                            
                 </div>
 
                 <div class="pure-control-group">
                     <label for="lastname">Lastname</label>
-                    <input id="lastname" name="lastname" type="text" placeholder="Lastname" value="Krutovsky" required>                            
+                    <input id="lastname" name="lastname" type="text" placeholder="Lastname" required>                            
                 </div>
 
                 <div class="pure-control-group">
                     <label for="work_phone">Work phone</label>
-                    <input id="work_phone" type="tel"  pattern="\d{3}-\d{3}-\d{2}-\d{2}" value="923-407-90-09"  placeholder="xxx-xxx-xx-xx" name="work_phone" required>                            
+                    <input id="work_phone" type="tel"  pattern="\d{3}-\d{3}-\d{2}-\d{2}"  placeholder="xxx-xxx-xx-xx" name="work_phone" required>                            
                 </div>
 
                 <div class="pure-control-group">
                     <label for="mobile_phone">Mobile phone</label>
-                    <input id="mobile_phone" type="tel"  pattern="\d{3}-\d{3}-\d{2}-\d{2}" value="923-407-90-09" placeholder="xxx-xxx-xx-xx" name="mobile_phone" required>                            
+                    <input id="mobile_phone" type="tel"  pattern="\d{3}-\d{3}-\d{2}-\d{2}" placeholder="xxx-xxx-xx-xx" name="mobile_phone" required>                            
                 </div>
 
                 <div class="pure-control-group">
                     <label for="email">E-mail</label>
-                    <input id="email" type="email" name="email" placeholder="email" value="it.leon@docsis.ru" pattern ="\S{1,30}@\S{1,10}$" required>                            
+                    <input id="email" type="email" name="email" placeholder="email" pattern ="\S{1,30}@\S{1,10}$" required>                            
                 </div>
 
                 <div class="pure-control-group">
