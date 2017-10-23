@@ -6,6 +6,7 @@
 package com.bor.javawebexample;
 
 
+import com.bor.javawebexample.db.ORMLiteUtils;
 import com.bor.javawebexample.db.PhonebookRecord;
 import com.bor.javawebexample.fs.Configuration;
 import com.bor.javawebexample.fs.JsonFileWriter;
@@ -38,6 +39,7 @@ public class PhonebookServlet extends HttpServlet {
         super.init(config);        
         Configuration conf = (Configuration) getServletContext().getAttribute("config");
         fileWriter = new JsonFileWriter(conf.getJsondataPath());
+        ORMLiteUtils.createTable(PhonebookRecord.class);
         JsonFileWriter.prepareDirs(conf.getMainDirPath());
         routeManager = new RouteManager(conf.getMainDirPath(), conf.getLogFilePath());
     }

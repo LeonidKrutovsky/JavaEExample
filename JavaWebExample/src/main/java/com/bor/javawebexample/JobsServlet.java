@@ -32,10 +32,8 @@ public class JobsServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        Configuration conf = (Configuration) getServletContext().getAttribute("config");
-        
-        ORMLiteUtils.createTable(JobRecord.class);
-        ORMLiteUtils.createTable(PhonebookRecord.class);
+        Configuration conf = (Configuration) getServletContext().getAttribute("config");        
+        ORMLiteUtils.createTable(JobRecord.class);        
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
